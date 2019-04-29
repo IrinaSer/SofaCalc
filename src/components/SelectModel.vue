@@ -1,62 +1,39 @@
-<template>
-    <div class="sofa-filter">
-        <div class="sofa-filter__options">
-          <label class="sofa-filter__label">
-            <span class="sofa-filter__label-title">Тип модели</span>
-            <select
-              class="sofa-filter__select"
-              v-model="selectType"
-              @change="resetSelected"
-            >
-              <option
-                v-for="(type, key) in sofaTypes"
-                :key="key"
-                :value="type"
-              >{{ type }}
-              </option>
-            </select>
-          </label>
-          <label class="sofa-filter__label">
-            <span class="sofa-filter__label-title">Стиль</span>
-            <select
-              class="sofa-filter__select"
-              v-model="selectStyle"
-              @change="resetSelected"
-            >
-              <option
-                v-for="(type, key) in sofaStyles"
-                :key="key"
-                :value="type"
-              >{{ type }}
-              </option>
-            </select>
-          </label>
-        </div>
-        <vue-custom-scrollbar class="sofa-filter__products-wrap">
-          <div class="sofa-filter__products" v-if="showProducts">
-            <div
-              class="sofa-filter__product"
-              v-for="(item, key) in showProducts"
-              :key="key"
-              :class="(selected.id === item.id) ? 'select' : ''"
-              @click="userSelect(item)"
-            >
-              <div class="sofa-filter__product-pic">
-                <img :src="item.pic" :alt="item.name">
-              </div>
-              <div class="sofa-filter__product-name">{{ item.name }}</div>
-              <div class="sofa-filter__product-size">{{ item.size }}</div>
-              <div class="sofa-filter__product-price">{{ item.price }} руб.</div>
-            </div>
-          </div>
-          <div v-else>
-            <p>По Вашему запросу ничего не найдено</p>
-          </div>
-        </vue-custom-scrollbar>
-      <div class="sofa-filter__next-step" v-show="selected.name !== ''">
-        <a class="sofa-filter__btn" href="#" @click="nextStep">Выбрать обивку</a>
-      </div>
-    </div>
+<template lang="pug">
+  .sofa-filter
+    .sofa-filter__options
+      .sofa-filter__label
+        span.sofa-filter__label-title Тип модели
+        select.sofa-filter__select(
+          v-model="selectType"
+          @change="resetSelected")
+          option(
+            v-for="(type, key) in sofaTypes"
+            :key="key"
+            :value="type") {{ type }}
+      .sofa-filter__label
+        span.sofa-filter__label-title Стиль
+        select.sofa-filter__select(
+          v-model="selectStyle"
+          @change="resetSelected")
+          option(v-for="(style, key) in sofaStyles"
+            :key="key"
+            :value="style") {{ style }}
+    vue-custom-scrollbar.sofa-filter__products-wrap
+      .sofa-filter__products(v-if="showProducts")
+        .sofa-filter__product(
+          v-for="(item, key) in showProducts"
+          :key="key"
+          :class="(selected.id === item.id) ? 'select' : ''"
+          @click="userSelect(item)")
+          .sofa-filter__product-pic
+            img(:src="item.pic" :alt="item.name")
+          .sofa-filter__product-name {{ item.name }}
+          .sofa-filter__product-size {{ item.size }}
+          .sofa-filter__product-price {{ item.price }} руб.
+      div(v-else)
+        p По Вашему запросу ничего не найдено
+    .sofa-filter__next-step(v-show="selected.name !== ''")
+      a(href="#" @click="nextStep").sofa-filter__btn Выбрать обивку
 </template>
 
 <script>
@@ -71,16 +48,12 @@
     computed: {
       sofaTypes: function () {
         let arr = [];
-        this.products.forEach(item => {
-          arr.push(...item.types);
-        });
+        this.products.map((product)=> arr.push(...product.types));
         return arr = arr.filter((elem,i) => arr.indexOf(elem) === i);
       },
       sofaStyles: function () {
         let arr = [];
-        this.products.forEach(item => {
-          arr.push(...item.styles);
-        });
+        this.products.map((product)=> arr.push(...product.styles));
         return arr = arr.filter((elem,i) => arr.indexOf(elem) === i);
       },
       showProducts: function () {
