@@ -1,11 +1,7 @@
-<template>
-
-  <div>
-    <h1>Ordering</h1>
-    <pre>
-      {{order}}
-    </pre>
-  </div>
+<template lang="pug">
+  .result
+    h1 Ordering
+    pre {{order}}
 </template>
 
 <script>

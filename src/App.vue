@@ -1,13 +1,9 @@
-<template>
-  <div id="app" class="app">
-    <div class="container">
-      <div class="inner">
-          <div class="main-content main-content__filter">
-            <SofaCalc></SofaCalc>
-          </div>
-      </div>
-    </div>
-  </div>
+<template lang="pug">
+  #app.app
+    .container
+      .inner
+        .main-content.main-content__filter
+          SofaCalc
 </template>
 
 <script>

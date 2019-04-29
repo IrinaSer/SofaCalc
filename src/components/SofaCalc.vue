@@ -1,32 +1,28 @@
-<template>
-  <div class="main-content__filter-inner">
-    <h1>Конструктор диванов</h1>
-    <ul class="sofa-filter__nav">
-      <li class="sofa-filter__nav-item" :class="this.stepOne ? 'active' : this.stepTwo || this.stepThree ? 'back' : ''" @click="goBackToStepOne">Выбор модели
-      </li>
-      <li class="sofa-filter__nav-item" :class="this.stepTwo ? 'active' : this.stepThree ? 'back' : ''" @click="goBackToStepTwo">Выбор обивки</li>
-      <li class="sofa-filter__nav-item" :class="this.stepThree ? 'active' : ''">Оформление заказа</li>
-    </ul>
-        <slot v-if="this.stepOne">
-          <SelectModel
-            :products="products"
-            :selected="order"
-            @next="goToStepTwo"
-          ></SelectModel>
-        </slot>
-        <slot v-else-if="this.stepTwo">
-          <SelectColor
-            :selectProduct="order"
-            :palettes="palettes"
-            @next="goToStepThree"
-          ></SelectColor>
-        </slot>
-        <slot v-else>
-          <Ordering
-            :order="order"
-          ></Ordering>
-        </slot>
-  </div>
+<template lang="pug">
+  .main-content__filter-inner
+    h1 Конструктор диванов
+    ul.sofa-filter__nav
+      li.sofa-filter__nav-item(
+        :class="this.stepOne ? 'active' : this.stepTwo || this.stepThree ? 'back' : ''"
+        @click="goBackToStepOne") Выбор модели
+      li.sofa-filter__nav-item(
+        :class="this.stepTwo ? 'active' : this.stepThree ? 'back' : ''"
+        @click="goBackToStepTwo") Выбор обивки
+      li.sofa-filter__nav-item(:class="this.stepThree ? 'active' : ''") Оформление заказа
+    slot(v-if="this.stepOne")
+      SelectModel(
+        :products="products"
+        :selected="order"
+        @next="goToStepTwo"
+      )
+    slot(v-else-if="this.stepTwo")
+      SelectColor(
+        :selectProduct="order"
+        :palettes="palettes"
+        @next="goToStepThree"
+      )
+    slot(v-else)
+      Ordering(:order="order")
 </template>
 
 <script>
@@ -91,7 +87,7 @@
       }
     },
     created: function () {
-      const productToOrder = new Order();
+      const productToOrder = new Order('','');
       this.$store.commit('createOrder', productToOrder);
     }
   }
