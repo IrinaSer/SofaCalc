@@ -48,16 +48,12 @@
     computed: {
       sofaTypes: function () {
         let arr = [];
-        this.products.forEach(item => {
-          arr.push(...item.types);
-        });
+        this.products.map((product)=> arr.push(...product.types));
         return arr = arr.filter((elem,i) => arr.indexOf(elem) === i);
       },
       sofaStyles: function () {
         let arr = [];
-        this.products.forEach(item => {
-          arr.push(...item.styles);
-        });
+        this.products.map((product)=> arr.push(...product.styles));
         return arr = arr.filter((elem,i) => arr.indexOf(elem) === i);
       },
       showProducts: function () {
